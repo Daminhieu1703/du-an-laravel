@@ -18,7 +18,7 @@
                                         <a href="{{ route('client.product', ['product'=>$item->id]) }}">
                                             <img class="img-fluid w-100" src="{{ asset($item->img) }}" alt="">
                                         </a>
-                                        <div class="bg-danger rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">New</div>
+                                        <div class="{{$item->amount > 0 && $item->status == 1 ? 'bg-success' : 'bg-danger'}} rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">{{$product->amount > 0 && $product->status == 1 ? 'Còn hàng' : 'Hết hàng'}}</div>
                                     </div>
                                     <div class="text-center p-4">
                                         <a class="d-block h5 mb-2" href="">{{$item->name}}</a>
@@ -39,7 +39,7 @@
                                         <a href="{{ route('client.product', ['product'=>$product->id]) }}">
                                             <img class="img-fluid w-100" src="{{ asset($product->img) }}" alt="">
                                         </a>
-                                        <div class="{{$product->amount > 0 ? 'bg-success' : 'bg-danger'}} rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">{{$product->amount > 0 ? 'Còn hàng' : 'Hết hàng'}}</div>
+                                        <div class="{{$product->amount > 0 && $product->status == 1 ? 'bg-success' : 'bg-danger'}} rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">{{$product->amount > 0 && $product->status == 1 ? 'Còn hàng' : 'Hết hàng'}}</div>
                                     </div>
                                     <div class="text-center p-4">
                                         <a class="d-block h5 mb-2" href="">{{$product->name}}</a>

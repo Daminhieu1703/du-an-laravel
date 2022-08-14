@@ -183,6 +183,7 @@ class Controller extends BaseController
                 ]);
                 $updateProduct = Product::find($cart->product_id);
                 $updateProduct->amount = $updateProduct->amount - $cart->amount;
+                $updateProduct->status = 2;
                 $updateProduct->save();
             }
             Cart::where('user_id','=',Auth::user()->id)->delete();
@@ -231,6 +232,7 @@ class Controller extends BaseController
             foreach ($orderDetail as $value) {
                 $updateProduct = Product::find($value->product_id);
                 $updateProduct->amount =$updateProduct->amount + $value->amount;
+                $updateProduct->status = 1;
                 $updateProduct->save();
             }
             OrderDetail::where('order_id','=',$order->id)->delete();

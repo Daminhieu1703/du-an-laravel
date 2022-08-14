@@ -14,7 +14,6 @@ class ProductController extends Controller
     public function index(){
         $products = Product::select('*')
         ->orderBy('id','desc')->with('sector', 'size')->paginate(5);
-        // dd($products);
         return view('admin.products.list', ['products' => $products]);
     }
     public function create(){
@@ -34,26 +33,25 @@ class ProductController extends Controller
         $product->save();
         return redirect()->route('products.list')->with('error_correct','Thêm mới sản phẩm thành công !');
     }
-    // public function delete(Product $product){
-    //     $product->delete();
-    //     return redirect()->back();
-    // }
     public function delete_all(Request $request){
         if ($request->id) {
             foreach ($request->id as $id) {
-                // $detailOrder = OrderDetail::where('product_id','=',$id)->get();
-                // $order = Order::where('id','=',$detailOrder[0]->order_id)->get();
+                $detailOrder = OrderDetail::where('product_id','=',$id)->get();
+                if ($detailOrder->IsEmpty()) {
+                    Comment::where('product_id','=',$id)->delete();
+                    OrderDetail::where('product_id','=',$id)->delete();
+                    Product::destroy($id);
+                }else {
+                    return redirect()->route('products.list')->with('error_incorrect','Sản phẩm này đang có trong đơn hàng bạn không thể xóa !');
+                }
+                // $order = Order::where('id','=',$detailOrder[0]->order_id)->get();    
                 // $order[0]->total = $order[0]->total - $detailOrder[0]->price;
                 // $order[0]->amount = $order[0]->amount - $detailOrder[0]->amount;
                 // $order[0]->save();
                 // $order = Order::find($detailOrder[0]->order_id);
-                // dd()
                 // if ($order->total <= 0) {
                 //     $order->delete();
                 // }
-                // Comment::where('product_id','=',$id)->delete();
-                // OrderDetail::where('product_id','=',$id)->delete();
-                Product::destroy($id);
             }
             return redirect()->route('products.list')->with('error_correct','Đã xóa sản phẩm !');
         }

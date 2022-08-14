@@ -112,7 +112,7 @@
                                 <p class="text-muted"><strong>{{$product->sector->name}}</strong></p>
                             </li>
                         </ul>
-                        @if ($product->amount > 0)
+                        @if ($product->amount > 0 && $product->status == 1)
                             <ul class="list-inline">
                                 <li class="list-inline-item">
                                     <h6>Số lượng:</h6>
@@ -175,7 +175,7 @@
                             </div>
                             <div class="row pb-3">
                                 <div class="col d-grid">
-                                    <button  type="submit"{{$product->amount > 0 ? '': 'disabled'}} class="btn btn-dark btn-lg" name="submit" value="addtocard">Thêm vào giỏ hàng</button>
+                                    <button  type="submit"{{$product->amount > 0 && $product->status == 1 ? '': 'disabled'}} class="btn btn-dark btn-lg" name="submit" value="addtocard">Thêm vào giỏ hàng</button>
                                 </div>
                             </div>
                         </form>

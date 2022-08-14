@@ -39,7 +39,7 @@
           <div class="d-none d-lg-flex ms-auto">
             @if (Auth::check())
                 <div class="nav-item dropdown">
-                    <img src="{{Auth::user()->avatar}}" alt="" class="btn-sm-square bg-white rounded-circle ms-3">
+                    <img src="{{asset(Auth::user()->avatar)}}" alt="" class="btn-sm-square bg-white rounded-circle ms-3">
                     <div class="dropdown-menu mt-2">
                         @if (Auth::user()->role == 2)
                             <a href="{{ asset('/dashboard') }}" class="dropdown-item">Quản trị</a>

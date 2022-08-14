@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -67,7 +68,7 @@ class UserController extends Controller
             $user->avatar = $avatar->storeAs('images/users', $avatarName);
         }
         $user->save();
-        return redirect()->route('users.list')->with('error_correct','Cập nhật sản phẩm thành công !');
+        return redirect()->route('users.list')->with('error_correct','Cập nhật tài khoản thành công !');
     }
     public function changeStatus(User $user){
         if ($user->status == 1) {
@@ -76,6 +77,22 @@ class UserController extends Controller
             $user->status = 1;
         }
         $user->save();
-        return redirect()->back()->with('error_correct','Cập nhật trạng thái sản phẩm thành công !');
+        return redirect()->back()->with('error_correct','Cập nhật trạng thái tài khoản thành công !');
+    }
+    public function editAdmin(){
+        $user = User::find(Auth::user()->id);
+        $user->birthday = date('Y-m-d', strtotime($user->birthday));
+        return view('admin.editAdmin',compact('user'));
+    }
+    public function updateAdmin(User $user,UserRequest $request){
+        $user->fill($request->all());
+        if($request->hasFile('avatar_new')) {
+            $avatar = $request->avatar_new;
+            $avatarName = $avatar->hashName();
+            $avatarName = $request->name . '_' . $avatarName;
+            $user->avatar = $avatar->storeAs('images/users', $avatarName);
+        }
+        $user->save();
+        return redirect()->route('users.editAdmin')->with('error_correct','Cập nhật tài khoản thành công !');
     }
 }

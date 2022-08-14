@@ -51,6 +51,7 @@ class OrderController extends Controller
                 foreach ($orderDetail as $value) {
                     $updateProduct = Product::find($value->product_id);
                     $updateProduct->amount =$updateProduct->amount + $value->amount;
+                    $updateProduct->status = 1;
                     $updateProduct->save();
                 }
                 OrderDetail::where('order_id','=',$id)->delete();

@@ -23,7 +23,7 @@ Route::prefix('/')->name('client.')->group(function (){
     Route::get('/', function () {
         return view('client.homepage');
     })->name('home');
-    Route::get('/shop',[Controller::class,'index'])->name('shop');
+    Route::get('/shop', [Controller::class,'index'])->name('shop');
     Route::post('/update-status-order/{order}',[Controller::class,'updateStatusOrder'])->name('updateStatusOrder');
     Route::post('/cancel-order/{order}',[Controller::class,'cancelOrder'])->name('cancelOrder');
     Route::post('/order',[Controller::class,'postOrder'])->name('postOrder');
@@ -44,7 +44,7 @@ Route::middleware('guest')->prefix('form')->name('form.')->group(function (){
     Route::post('/register',[Controller::class,'postRegister'])->name('postRegister');
 });
 Route::middleware('check')->prefix('/products')->name('products.')->group(function (){
-    Route::get('/',[ProductController::class,'index'])->name('list');
+    Route::get('/list',[ProductController::class,'index'])->name('list');
     Route::get('/create',[ProductController::class,'create'])->name('create');
     Route::post('/store',[ProductController::class,'store'])->name('store');
     Route::delete('/delete-all',[ProductController::class,'delete_all'])->name('delete-all');
@@ -60,6 +60,9 @@ Route::middleware('check')->prefix('/users')->name('users.')->group(function (){
     Route::get('/edit/{user}',[UserController::class,'edit'])->name('edit');
     Route::put('/update/{user}',[UserController::class,'update'])->name('update');
     Route::get('/change-status/{user}',[UserController::class,'changeStatus'])->name('change-status');
+
+    Route::get('/edit-admin',[UserController::class,'editAdmin'])->name('editAdmin');
+    Route::put('/update-admin/{user}',[UserController::class,'updateAdmin'])->name('updateAdmin');
 });
 Route::middleware('check')->prefix('/sectors')->name('sectors.')->group(function (){
     Route::get('/list',[SectorController::class,'index'])->name('list');
@@ -88,7 +91,6 @@ Route::middleware('check')->prefix('/orders')->name('orders.')->group(function (
 });
 Route::middleware('check')->prefix('/dashboard')->name('dashboard.')->group(function (){
     Route::get('/',[DashboardController::class,'index'])->name('list');
-    Route::post('/',[DashboardController::class,'search'])->name('list');
 });
 Route::get('/logout', [Controller::class, 'logout']);
 

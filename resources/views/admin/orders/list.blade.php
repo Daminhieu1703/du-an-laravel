@@ -15,7 +15,7 @@
                         </div>
                     @endif
                         <form action="{{ route('orders.cancelAll') }}" method="POST">
-                                <table class="table table-bordered table-responsive-lg">
+                                <table class="table table-bordered mb-0 table-hover align-middle text-nowrap mb-3">
                                     @csrf
                                     @method('delete')
                                     <thead>
